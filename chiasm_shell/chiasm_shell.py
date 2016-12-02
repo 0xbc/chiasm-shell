@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Main class and method for chiasm shell.
+"""
 
 from keystone import *
 

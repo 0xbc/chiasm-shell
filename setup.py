@@ -28,7 +28,7 @@ setup(name='chiasm-shell',
       author='Ben Cheney',
       author_email='ben.cheney@gmail.com',
       license='MIT',
-      packages=['chiasm-shell'],
+      packages=['chiasm_shell'],
       install_requires=[
           'keystone-engine',
       ],
