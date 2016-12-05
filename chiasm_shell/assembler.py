@@ -1,5 +1,5 @@
 """
-Handles
+Handles assembler functionality, powered by the Keystone engine.
 
 :author: Ben Cheney
 :license: MIT
@@ -31,6 +31,8 @@ class Assembler(Backend):
         self._build_dicts()
 	self._arch = ('x86', '32')
         self._set_arch(*self._arch)
+	self._last_encoding = None
+	self._last_count = None
 
     def _build_dicts(self):
         """
@@ -42,6 +44,10 @@ class Assembler(Backend):
         self.valid_archs = {a: d[a] for a in d.keys()
                             if re.match(regex_arch, a) and ks.ks_arch_supported(d[a])}
         self.modes = {m: d[m] for m in d.keys() if re.match(regex_mode, m)}
+
+    def clear_state(self):
+        self._last_encoding = None
+        self._last_count = None
 
     def _set_arch(self, arch, *modes):
         """
@@ -79,6 +85,8 @@ class Assembler(Backend):
         try:
             # Initialize engine in X86-32bit mode
             encoding, count = self._ks.asm(line)
+	    self._last_encoding = encoding
+            self._last_count = count
             l.info("".join('\\x{:02x}'.format(opcode) for opcode in encoding))
         except ks.KsError as e:
             l.error("ERROR: %s" %e)
@@ -110,6 +118,14 @@ class Assembler(Backend):
         """
         for a in sorted(self.modes):
             l.info(a[8:].lower())
+
+    def do_count(self, args):
+        """
+        Prints the number of bytes emitted by the last successful encoding
+        (or nothing if no successful encodings have occurred yet.)
+        """
+        if self._last_count is not None:
+            l.info(self._last_count)
 
 #    def do_help(self, arg):
 #        if arg == 'lsarch':

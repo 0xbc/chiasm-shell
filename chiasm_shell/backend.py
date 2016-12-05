@@ -22,7 +22,7 @@ class Backend(Cmd):
         """
         Cmd.__init__(self)
         self._init_backend()
-	self.launch_module = None
+        self.launch_module = None
 
     def _init_backend(self):
         """
@@ -30,17 +30,17 @@ class Backend(Cmd):
         """
         raise NotImplementedError, "Backends need to implement _init_backend"
 
+    def clear_state(self):
+        """
+        Optional interface to reset internal backend state.
+        """
+        pass
+
     def default(self, line):
         raise NotImplementedError, "Backends need to implement default hanlders"
 
     def get_arch(self):
-	pass
-
-#    def do_help(self, arg):
-#        if arg == 'quit' or arg == 'exit':
-#            l.info("closes chiasm-shell")
-#        else:
-#            Cmd.do_help(self, arg)
+        pass
 
     def do_quit(self, args):
         """
@@ -55,6 +55,9 @@ class Backend(Cmd):
         raise SystemExit
 
     def cmdloop(self):
+        """
+        Overridden cmdloop to catch CTRL-Cs
+        """
         try:
             Cmd.cmdloop(self)
         except KeyboardInterrupt as e:
@@ -62,26 +65,31 @@ class Backend(Cmd):
             self.cmdloop()
 
     def do_switch(self, arg):
-	"""
-	Switch to another chiasm backend (type lsbackends to see what's available).
-	"""
-	if arg.strip() == '':
-	    l.error("usage: switch <backend>")
-	    return False
-	backends = get_backends()
+        """
+        Switch to another chiasm backend (type lsbackends to see what's available).
+        """
+        if arg.strip() == '':
+            l.error("usage: switch <backend>")
+            return False
+        backends = get_backends()
         if backends.has_key(arg):
+            new_backend = backends[arg]
+            new_backend.clear_state()
             self.launch_module = backends[arg]
-	    return True # True = quit this backend's loop
+            return True # True = quit this backend's loop
         else:
             l.error("backend {} not found".format(arg))
-	    self.launch_module = None
-    
+            self.launch_module = None
+
     def do_lsbackends(self, arg):
         """
         List the chiasm backends currently available.
         """
         l.info(", ".join(get_backends().keys()))
-		
+
     def postcmd(self, stop, line):
-	l.debug("i'm in postcmd, line is {}".format(line))
-	return stop
+        """
+        Just overridden for debugging purposes.
+        """
+        l.debug("i'm in postcmd, line is {}".format(line))
+        return stop
