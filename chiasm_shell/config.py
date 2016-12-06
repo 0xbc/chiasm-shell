@@ -4,8 +4,10 @@ def get_backends():
     global BACKENDS
     if BACKENDS is None:
         from assembler import Assembler
+        from disassembler import Disassembler
         BACKENDS = {
-         'asm' : Assembler()
+         'asm' : Assembler(),
+         'disasm' : Disassembler()
         }
     return BACKENDS
 
