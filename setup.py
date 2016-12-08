@@ -5,7 +5,7 @@ except ImportError:
 
 def disable_sandbox():
     """
-    When keystone is installed as a dependency, setuptools
+    When capstone/keystone is installed as a dependency, setuptools
     throws a SandboxViolation when it tries to create a
     directory for its shared library. Just disable the
     sandbox as a hacky workaround for now.
@@ -34,7 +34,7 @@ setup(
     packages=['chiasm_shell'],
     install_requires=[
         'keystone-engine',
-        #'capstone',
+        'capstone'
     ],
     scripts=[
         'scripts/chiasm-shell'

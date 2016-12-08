@@ -33,6 +33,7 @@ class Disassembler(Backend):
     	self._arch = ('x86', '32')
         self._set_arch(*self._arch)
     	self._last_decoding = None
+        self._firstaddr = 0x1000
 
     def _build_dicts(self):
         """
@@ -63,7 +64,7 @@ class Disassembler(Backend):
             return False
         try:
             _cs = cs.Cs(a, sum(ms))
-	        self._arch = (arch, modes)
+	    self._arch = (arch, modes)
             l.debug("Architecture set to {}, mode(s): {}".format(arch, ', '.join(modes)))
             self._cs = _cs
         except cs.CsError as e:
@@ -84,7 +85,7 @@ class Disassembler(Backend):
         """
         try:
             self._last_decoding = []
-            for (addr, size, mn, op_str) in self._cs.disasm_lite(line.decode('string_escape'), 0x1000):
+            for (addr, size, mn, op_str) in self._cs.disasm_lite(line.decode('string_escape'), self._firstaddr):
 	        self._last_decoding.append((addr, size, mn, op_str))
                 l.info("0x{:x}:\t{}\t{}".format(addr, mn, op_str))
         except cs.CsError as e:
@@ -118,3 +119,16 @@ class Disassembler(Backend):
         """
         for a in sorted(self.modes):
             l.info(a[8:].lower())
+
+    def do_setfirstaddr(self, args):
+        """
+        Sets the hex address of the first instruction in the buffer to be disassembled.
+        """
+        a = args.split()
+        if len(a) < 1:
+            pass
+        try:
+            addr = int(a[0], 16)
+            self._firstaddr = addr
+        except ValueError:
+            l.error("Input not recognised as a valid hex value - start address not changed")
