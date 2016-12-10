@@ -1,7 +1,10 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+"""
+Chiasm Shell setup.
+
+:author: Ben Cheney
+:license: MIT
+"""
+from setuptools import setup
 
 def disable_sandbox():
     """
@@ -9,12 +12,14 @@ def disable_sandbox():
     throws a SandboxViolation when it tries to create a
     directory for its shared library. Just disable the
     sandbox as a hacky workaround for now.
+
+    nb.
     """
 
     try:
         from setuptools.sandbox import DirectorySandbox
         def violation(operation, *args, **_):
-            print "SandboxViolation (ignored): %s" % (args,)
+            print("SandboxViolation (disabled): {}".format(args))
 
         DirectorySandbox._violation = violation
     except ImportError:
