@@ -4,12 +4,13 @@ Handles assembler functionality, powered by the Keystone engine.
 :author: Ben Cheney
 :license: MIT
 """
+from __future__ import absolute_import
 
 import keystone as ks
 import logging
 import re
 
-from backend import Backend
+from chiasm_shell.backend import Backend
 
 l = logging.getLogger('chiasm_shell.assembler')
 
@@ -60,7 +61,7 @@ class Assembler(Backend):
                 return False
             ms = [self.modes[''.join(['KS_MODE_', m.upper()])] for m in modes]
         except KeyError:
-            print l.error("ERROR: Invalid architecture or mode string specified")
+            l.error("ERROR: Invalid architecture or mode string specified")
             return False
         try:
             _ks = ks.Ks(a, sum(ms))
@@ -97,7 +98,7 @@ class Assembler(Backend):
         Lists the architectures available in the installed version of keystone.
         """
         for a in self.valid_archs:
-            print a[8:].lower()
+            l.info(a[8:].lower())
 
     def do_setarch(self, args):
         """
@@ -107,7 +108,7 @@ class Assembler(Backend):
         """
         a = args.split()
         if len(a) < 2:
-            print "Need to specify at least arch and one mode"
+            l.error("Need to specify at least arch and one mode")
             return
         arch = a[0]
         modes = a[1:]
@@ -116,7 +117,8 @@ class Assembler(Backend):
 
     def do_lsmodes(self, args):
         """
-        Lists the known modes across all architectures. Note that not all modes apply to all architectures.
+        Lists the known modes across all architectures.
+        Note that not all modes apply to all architectures.
         """
         for a in sorted(self.modes):
             l.info(a[8:].lower())

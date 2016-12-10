@@ -1,8 +1,6 @@
 # chiasm-shell
 Python-based interactive assembler/disassembler CLI, powered by [Keystone]/[Capstone].
 
-- Architecture support for assembly/disassembly is defined by what you've built into your local Keystone/Capstone install.
-
 ## Why did you make this?
 I wanted to quickly view some opcodes with [metasm-shell.rb], but I didn't have a Metasploit install handy. I didn't really want to mess around with Ruby either, so I figured that writing my own replacement was a good excuse to play with Keystone and Capstone.
 
@@ -46,6 +44,11 @@ disasm> \x40\x31\xdb
 0x1000: inc     eax
 0x1001: xor     ebx, ebx
 ```
+
+## TODO
+- syntax highlighting and/or tab completion for assembly
+- intelligent mode selection
+- test suite
 
 [keystone]: <http://www.keystone-engine.org/>
 [capstone]: <http://www.capstone-engine.org/>

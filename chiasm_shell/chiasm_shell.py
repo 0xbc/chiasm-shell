@@ -5,9 +5,11 @@ Main class and method for chiasm shell.
 :author: Ben Cheney
 :license: MIT
 """
+from __future__ import absolute_import
+
 import logging
 
-import config as c
+import chiasm_shell.config as c
 
 l = logging.getLogger('chiasm_shell.chiasm_shell')
 
@@ -23,6 +25,6 @@ class ChiasmShell(object):
     	        backend = backend.launch_module
     	    else:
     	        break
-    
+
 if __name__ == '__main__':
     ChiasmShell().run()

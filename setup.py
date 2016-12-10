@@ -4,6 +4,7 @@ Chiasm Shell setup.
 :author: Ben Cheney
 :license: MIT
 """
+from __future__ import print_function, absolute_import
 from setuptools import setup
 
 def disable_sandbox():
@@ -19,8 +20,12 @@ def disable_sandbox():
     try:
         from setuptools.sandbox import DirectorySandbox
         def violation(operation, *args, **_):
-            print("SandboxViolation (disabled): {}".format(args))
+            """
+            Print stup for DirectorySandbox violation function.
+            """
+            print("SandboxViolation (disabled): {} {}".format(operation, args))
 
+        # pylint: disable=W0212
         DirectorySandbox._violation = violation
     except ImportError:
         pass

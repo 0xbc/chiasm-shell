@@ -4,13 +4,14 @@ Handles disassembler functionality, powered by the Capstone engine.
 :author: Ben Cheney
 :license: MIT
 """
+from __future__ import absolute_import
 
 import capstone as cs
 import logging
 import re
 import binascii
 
-from backend import Backend
+from chiasm_shell.backend import Backend
 
 l = logging.getLogger('chiasm_shell.disassembler')
 
@@ -60,7 +61,7 @@ class Disassembler(Backend):
                 return False
             ms = [self.modes[''.join(['CS_MODE_', m.upper()])] for m in modes]
         except KeyError:
-            print l.error("ERROR: Invalid architecture or mode string specified")
+            l.error("ERROR: Invalid architecture or mode string specified")
             return False
         try:
             _cs = cs.Cs(a, sum(ms))
@@ -86,7 +87,7 @@ class Disassembler(Backend):
         try:
             self._last_decoding = []
             for (addr, size, mn, op_str) in self._cs.disasm_lite(line.decode('string_escape'), self._firstaddr):
-	        self._last_decoding.append((addr, size, mn, op_str))
+	            self._last_decoding.append((addr, size, mn, op_str))
                 l.info("0x{:x}:\t{}\t{}".format(addr, mn, op_str))
         except cs.CsError as e:
             l.error("ERROR: %s" %e)
@@ -96,7 +97,7 @@ class Disassembler(Backend):
         Lists the architectures available in the installed version of keystone.
         """
         for a in self.valid_archs:
-            print a[8:].lower()
+            l.info(a[8:].lower())
 
     def do_setarch(self, args):
         """
@@ -106,7 +107,7 @@ class Disassembler(Backend):
         """
         a = args.split()
         if len(a) < 2:
-            print "Need to specify at least arch and one mode"
+            l.error("Need to specify at least arch and one mode")
             return
         arch = a[0]
         modes = a[1:]

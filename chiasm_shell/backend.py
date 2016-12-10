@@ -4,11 +4,12 @@ Backend superclass for assembler/disassembler - handles common functions.
 :author: Ben Cheney
 :license: MIT
 """
+from __future__ import absolute_import
 
 from cmd import Cmd
 import logging
 
-from config import get_backends
+from chiasm_shell.config import get_backends
 
 l = logging.getLogger('chiasm_shell.backend')
 
@@ -28,7 +29,7 @@ class Backend(Cmd):
         """
         _init_backend is responsible for setting the prompt
         """
-        raise NotImplementedError, "Backends need to implement _init_backend"
+        raise NotImplementedError("Backends need to implement _init_backend")
 
     def clear_state(self):
         """
@@ -37,7 +38,7 @@ class Backend(Cmd):
         pass
 
     def default(self, line):
-        raise NotImplementedError, "Backends need to implement default hanlders"
+        raise NotImplementedError("Backends need to implement default hanlders")
 
     def get_arch(self):
         pass
