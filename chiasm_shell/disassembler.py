@@ -85,8 +85,8 @@ class Disassembler(Backend):
         :param line: Current line's text to try and disassemble.
         """
         # quick, brittle hack to enforce backslash encoding for now
-        regex = re.compile('(\\\\x[a-fA-F0-9]{2})+')
-        if not regex.match(line):
+        regex = re.compile('^(\\\\x[a-fA-F0-9]{2})+$')
+        if not regex.match(line.strip()):
             l.error("\\xXX\\xXX... is the only valid input format (XX = hex digits)")
             return
 

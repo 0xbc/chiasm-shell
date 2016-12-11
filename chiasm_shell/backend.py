@@ -73,7 +73,7 @@ class Backend(Cmd):
             l.error("usage: switch <backend>")
             return False
         backends = get_backends()
-        if backends.has_key(arg):
+        if arg in backends:
             new_backend = backends[arg]
             new_backend.clear_state()
             self.launch_module = backends[arg]
