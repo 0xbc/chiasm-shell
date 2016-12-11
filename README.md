@@ -22,15 +22,15 @@ python -m chiasm_shell.chiasm_shell
 
 ## How do I use it?
 - When the prompt is `asm>`, you're using the interactive assembler backend (Keystone).
--- Input one or more assembly statements separated by a semi-colon. x86 uses Intel syntax only at the moment.
+  - Input one or more assembly statements separated by a semi-colon. x86 uses Intel syntax only at the moment.
 - When the prompt is `disasm>`, you're using the interactive disassembler backend (Capstone).
--- Input one or more bytes represented by \xXX, where XX is a hex value.
+  - Input one or more bytes represented by \xXX, where XX is a hex value.
 - To switch backends, use `switch asm` or `switch disasm`.
 - To change architecture, use `setarch <arch> <mode(s)>`.
--- e.g. `setarch x86 64`.
--- You can use more than one mode, separated by spaces.
--- Use `lsarch` and `lsmode` to view supported architectures and modes for the current backend
--- At the moment, you need to know what modes are relevant to each architecture - check the Keystone/Capstone source if you're not sure.
+  - e.g. `setarch x86 64`.
+  - You can use more than one mode, separated by spaces.
+  - Use `lsarch` and `lsmode` to view supported architectures and modes for the current backend
+  - At the moment, you need to know what modes are relevant to each architecture - check the Keystone/Capstone source if you're not sure.
 - Type `help` to see a list of commands; `help <cmd>` to see the docstring for `cmd`.
 
 ## Example usages
@@ -51,10 +51,10 @@ Please get in touch/raise an issue/PR/etc!
 I *think* it should work on either Python 2.7 or Python 3.4, but I haven't tested the latter much.
 
 ## TODO
-- syntax highlighting and/or tab completion for assembly
-- intelligent mode selection
-- support different input/output formats
-- test suite
+- Syntax highlighting and/or tab completion for assembly
+- Intelligent mode selection
+- Support different input/output formats
+- Test suite
 
 [keystone]: <http://www.keystone-engine.org/>
 [capstone]: <http://www.capstone-engine.org/>
