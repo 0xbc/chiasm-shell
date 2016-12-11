@@ -6,9 +6,9 @@ Handles assembler functionality, powered by the Keystone engine.
 """
 from __future__ import absolute_import
 
-import keystone as ks
 import logging
 import re
+import keystone as ks
 
 from chiasm_shell.backend import Backend
 
@@ -33,7 +33,6 @@ class Assembler(Backend):
         self._arch = ('x86', '32')
         self._set_arch(*self._arch)
         self._last_encoding = None
-        self._last_count = None
 
     def _build_dicts(self):
         """
@@ -48,7 +47,6 @@ class Assembler(Backend):
 
     def clear_state(self):
         self._last_encoding = None
-        self._last_count = None
 
     def _set_arch(self, arch, *modes):
         """
@@ -66,10 +64,10 @@ class Assembler(Backend):
         try:
             _ks = ks.Ks(a, sum(ms))
             self._arch = (arch, modes)
-            l.debug("Architecture set to {}, mode(s): {}".format(arch, ', '.join(modes)))
+            l.debug("Architecture set to %s, mode(s): %s", arch, ', '.join(modes))
             self._ks = _ks
         except ks.KsError as e:
-            l.error("ERROR: %s" %e)
+            l.error("ERROR: %s", e)
             return False
         return True
 
@@ -85,13 +83,11 @@ class Assembler(Backend):
         :param line: Current line's text to try and assemble.
         """
         try:
-            # Initialize engine in X86-32bit mode
-            encoding, count = self._ks.asm(line)
+            encoding, insn_count = self._ks.asm(line)
             self._last_encoding = encoding
-            self._last_count = count
             l.info("".join('\\x{:02x}'.format(opcode) for opcode in encoding))
         except ks.KsError as e:
-            l.error("ERROR: %s" %e)
+            l.error("ERROR: %s", e)
 
     def do_lsarch(self, args):
         """
@@ -113,7 +109,7 @@ class Assembler(Backend):
         arch = a[0]
         modes = a[1:]
         if self._set_arch(arch, *modes) is True:
-            l.info("Architecture set to {}, mode(s): {}".format(arch, ', '.join(modes)))
+            l.info("Architecture set to %s, mode(s): %s", arch, ', '.join(modes))
 
     def do_lsmodes(self, args):
         """
@@ -128,5 +124,5 @@ class Assembler(Backend):
         Prints the number of bytes emitted by the last successful encoding
         (or nothing if no successful encodings have occurred yet.)
         """
-        if self._last_count is not None:
-            l.info(self._last_count)
+        if self._last_encoding is not None:
+            l.info(len(self._last_encoding))

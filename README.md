@@ -45,9 +45,15 @@ disasm> \x40\x31\xdb
 0x1001: xor     ebx, ebx
 ```
 
+## It's broken/I have a suggestion/etc.
+Please get in touch/raise an issue/PR/etc!
+
+I *think* it should work on either Python 2.7 or Python 3.4, but I haven't tested the latter much.
+
 ## TODO
 - syntax highlighting and/or tab completion for assembly
 - intelligent mode selection
+- support different input/output formats
 - test suite
 
 [keystone]: <http://www.keystone-engine.org/>

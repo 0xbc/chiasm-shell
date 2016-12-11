@@ -79,7 +79,7 @@ class Backend(Cmd):
             self.launch_module = backends[arg]
             return True # True = quit this backend's loop
         else:
-            l.error("backend {} not found".format(arg))
+            l.error("backend %s not found", arg)
             self.launch_module = None
 
     def do_lsbackends(self, arg):
@@ -92,5 +92,5 @@ class Backend(Cmd):
         """
         Just overridden for debugging purposes.
         """
-        l.debug("i'm in postcmd, line is {}".format(line))
+        l.debug("i'm in postcmd, line is %s", line)
         return stop

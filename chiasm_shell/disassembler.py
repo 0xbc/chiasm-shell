@@ -6,10 +6,10 @@ Handles disassembler functionality, powered by the Capstone engine.
 """
 from __future__ import absolute_import
 
-import capstone as cs
 import logging
 import re
 import binascii
+import capstone as cs
 
 from chiasm_shell.backend import Backend
 
@@ -31,9 +31,9 @@ class Disassembler(Backend):
         """
         self.prompt = 'disasm> '
         self._build_dicts()
-    	self._arch = ('x86', '32')
+        self._arch = ('x86', '32')
         self._set_arch(*self._arch)
-    	self._last_decoding = None
+        self._last_decoding = None
         self._firstaddr = 0x1000
 
     def _build_dicts(self):
@@ -65,16 +65,16 @@ class Disassembler(Backend):
             return False
         try:
             _cs = cs.Cs(a, sum(ms))
-	    self._arch = (arch, modes)
-            l.debug("Architecture set to {}, mode(s): {}".format(arch, ', '.join(modes)))
+            self._arch = (arch, modes)
+            l.debug("Architecture set to %s, mode(s): %s", arch, ', '.join(modes))
             self._cs = _cs
         except cs.CsError as e:
-            l.error("ERROR: %s" %e)
+            l.error("ERROR: %s", e)
             return False
         return True
 
     def get_arch(self):
-	    return "{}, mode(s): {}".format(self._arch[0], ', '.join(self._arch[1]))
+        return "{}, mode(s): {}".format(self._arch[0], ', '.join(self._arch[1]))
 
     def default(self, line):
         """
@@ -84,13 +84,21 @@ class Disassembler(Backend):
 
         :param line: Current line's text to try and disassemble.
         """
+        # quick, brittle hack to enforce backslash encoding for now
+        regex = re.compile('(\\\\x[a-fA-F0-9]{2})+')
+        if not regex.match(line):
+            l.error("\\xXX\\xXX... is the only valid input format (XX = hex digits)")
+            return
+
         try:
             self._last_decoding = []
             for (addr, size, mn, op_str) in self._cs.disasm_lite(line.decode('string_escape'), self._firstaddr):
-	            self._last_decoding.append((addr, size, mn, op_str))
+                self._last_decoding.append((addr, size, mn, op_str))
                 l.info("0x{:x}:\t{}\t{}".format(addr, mn, op_str))
         except cs.CsError as e:
-            l.error("ERROR: %s" %e)
+            l.error("ERROR: %s", e)
+        except ValueError:
+            l.error("\\xXX\\xXX... is the only valid input format (XX = hex digits)")
 
     def do_lsarch(self, args):
         """
@@ -112,7 +120,7 @@ class Disassembler(Backend):
         arch = a[0]
         modes = a[1:]
         if self._set_arch(arch, *modes) is True:
-            l.info("Architecture set to {}, mode(s): {}".format(arch, ', '.join(modes)))
+            l.info("Architecture set to %s, mode(s): %s", arch, ', '.join(modes))
 
     def do_lsmodes(self, args):
         """
@@ -127,7 +135,7 @@ class Disassembler(Backend):
         """
         a = args.split()
         if len(a) < 1:
-            pass
+            return
         try:
             addr = int(a[0], 16)
             self._firstaddr = addr
