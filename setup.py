@@ -42,17 +42,16 @@ setup(
     author_email='ben.cheney@gmail.com',
     license='MIT',
     packages=['chiasm_shell'],
+    package_data={'chiasm_shell': ['chiasm_shell/VERSION']},
+    include_package_data=True,
     install_requires=[
         'keystone-engine',
         'capstone'
     ],
-    scripts=[
-        'scripts/chiasm-shell'
-    ],
     zip_safe=True,
     entry_points={
         'console_scripts': [
-            'chiasm_shell = chiasm_shell:main',
+            'chiasm-shell = chiasm_shell.chiasm_shell:main',
         ]
     },
     classifiers=(

@@ -5,6 +5,7 @@ Chiasm Shell backend and version configuration.
 :license: MIT
 """
 from __future__ import absolute_import
+from pkg_resources import resource_string
 import os
 
 BACKENDS = None
@@ -30,4 +31,4 @@ def get_default_backend():
     """
     return 'asm'
 
-__VERSION__ = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'VERSION')).read().strip()
+__VERSION__ = resource_string('chiasm_shell', 'VERSION').strip()

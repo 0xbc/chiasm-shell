@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-python -m chiasm_shell.chiasm_shell

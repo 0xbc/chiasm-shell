@@ -1,2 +1,3 @@
 include chiasm_shell/VERSION
 include README.md
+include LICENSE

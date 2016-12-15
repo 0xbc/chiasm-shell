@@ -32,5 +32,8 @@ class ChiasmShell(object):
             else:
                 break
 
-if __name__ == '__main__':
+def main():
     ChiasmShell().run()
+
+if __name__ == '__main__':
+    main()
