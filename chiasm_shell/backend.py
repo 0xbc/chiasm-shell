@@ -41,27 +41,30 @@ class Backend(Cmd):
         raise NotImplementedError("Backends need to implement default hanlders")
 
     def get_arch(self):
+        """
+        Optional interface to display the current architecture.
+        """
         pass
 
-    def do_quit(self, args):
+    def do_quit(self, dummy_args):
         """
         Quits chiasm shell - return to system prompt.
         """
         raise SystemExit
 
-    def do_exit(self, args):
+    def do_exit(self, dummy_args):
         """
         Quits chiasm shell - return to system prompt.
         """
         raise SystemExit
 
-    def cmdloop(self):
+    def cmdloop(self, intro=None):
         """
         Overridden cmdloop to catch CTRL-Cs
         """
         try:
-            Cmd.cmdloop(self)
-        except KeyboardInterrupt as e:
+            Cmd.cmdloop(self, intro)
+        except KeyboardInterrupt:
             l.info("type \'quit\' or \'exit\' to exit")
             self.cmdloop()
 
@@ -82,7 +85,7 @@ class Backend(Cmd):
             l.error("backend %s not found", arg)
             self.launch_module = None
 
-    def do_lsbackends(self, arg):
+    def do_lsbackends(self, dummy_args):
         """
         List the chiasm backends currently available.
         """

@@ -6,7 +6,6 @@ Chiasm Shell backend and version configuration.
 """
 from __future__ import absolute_import
 from pkg_resources import resource_string
-import os
 
 BACKENDS = None
 
@@ -14,6 +13,7 @@ def get_backends():
     """
     Returns a list of the available backends.
     """
+    # pylint: disable=W0603
     global BACKENDS
     if BACKENDS is None:
         # deferred import to avoid circular dependency hell

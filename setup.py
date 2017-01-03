@@ -34,10 +34,11 @@ disable_sandbox()
 
 setup(
     name='chiasm-shell',
-    description='CLI for assembly/disassembly with Keystone/Capstone.',
+    description='CLI for assembly/disassembly powered by Keystone/Capstone.',
     long_description=open('README.md').read(),
     version=open('chiasm_shell/VERSION').read().strip(),
-    url='http://github.com/0xbc/chiasm-shell',
+    url='https://github.com/0xbc/chiasm-shell',
+    download_url='https://github.com/0xbc/chiasm-shell/tarball/1.0.0a1',
     author='Ben Cheney',
     author_email='ben.cheney@gmail.com',
     license='MIT',
@@ -55,6 +56,7 @@ setup(
         ]
     },
     classifiers=(
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',
@@ -62,5 +64,8 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Security',
+        'Topic :: Software Development :: Assemblers',
+        'Topic :: Software Development :: Dissasemblers',
     ),
+    keywords = ['disassembler', 'assembler'],
 )

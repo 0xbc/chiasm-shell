@@ -34,6 +34,9 @@ class ChiasmShell(object):
                 break
 
 def main():
+    """
+    Public method for starting Chiasm Shell.
+    """
     ChiasmShell().run()
 
 if __name__ == '__main__':

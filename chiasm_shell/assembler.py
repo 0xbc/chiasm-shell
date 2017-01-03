@@ -22,6 +22,12 @@ class Assembler(Backend):
         """
         Create a new Assembler instance.
         """
+        self._ks = None
+        self._last_encoding = None
+        self._arch = None
+        self.mode = None
+        self.modes = None
+        self.valid_archs = None
         Backend.__init__(self)
 
     def _init_backend(self):
@@ -83,13 +89,13 @@ class Assembler(Backend):
         :param line: Current line's text to try and assemble.
         """
         try:
-            encoding, insn_count = self._ks.asm(line)
+            encoding, dummy_insn_count = self._ks.asm(line)
             self._last_encoding = encoding
             l.info("".join('\\x{:02x}'.format(opcode) for opcode in encoding))
         except ks.KsError as e:
             l.error("ERROR: %s", e)
 
-    def do_lsarch(self, args):
+    def do_lsarch(self, dummy_args):
         """
         Lists the architectures available in the installed version of keystone.
         """
@@ -111,7 +117,7 @@ class Assembler(Backend):
         if self._set_arch(arch, *modes) is True:
             l.info("Architecture set to %s, mode(s): %s", arch, ', '.join(modes))
 
-    def do_lsmodes(self, args):
+    def do_lsmodes(self, dummy_args):
         """
         Lists the known modes across all architectures.
         Note that not all modes apply to all architectures.
@@ -119,7 +125,7 @@ class Assembler(Backend):
         for a in sorted(self.modes):
             l.info(a[8:].lower())
 
-    def do_count(self, args):
+    def do_count(self, dummy_args):
         """
         Prints the number of bytes emitted by the last successful encoding
         (or nothing if no successful encodings have occurred yet.)

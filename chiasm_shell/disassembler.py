@@ -23,6 +23,12 @@ class Disassembler(Backend):
         """
         Create a new Disassembler instance.
         """
+        self._last_decoding = None
+        self._cs = None
+        self._firstaddr = None
+        self._arch = None
+        self.valid_archs = None
+        self.modes = None
         Backend.__init__(self)
 
     def _init_backend(self):
@@ -96,13 +102,14 @@ class Disassembler(Backend):
             for (addr, size, mn, op_str) in \
                     self._cs.disasm_lite(binascii.a2b_hex(stripped_line), self._firstaddr):
                 self._last_decoding.append((addr, size, mn, op_str))
-                l.info("0x{:x}:\t{}\t{}".format(addr, mn, op_str))
+                disas_str = "0x{:x}:\t{}\t{}".format(addr, mn, op_str)
+                l.info(disas_str)
         except cs.CsError as e:
             l.error("ERROR: %s", e)
         except ValueError:
             l.error("\\xXX\\xXX... is the only valid input format (XX = hex digits)")
 
-    def do_lsarch(self, args):
+    def do_lsarch(self, dummy_args):
         """
         Lists the architectures available in the installed version of keystone.
         """
@@ -124,9 +131,10 @@ class Disassembler(Backend):
         if self._set_arch(arch, *modes) is True:
             l.info("Architecture set to %s, mode(s): %s", arch, ', '.join(modes))
 
-    def do_lsmodes(self, args):
+    def do_lsmodes(self, dummy_args):
         """
-        Lists the known modes across all architectures. Note that not all modes apply to all architectures.
+        Lists the known modes across all architectures.
+        Note that not all modes apply to all architectures.
         """
         for a in sorted(self.modes):
             l.info(a[8:].lower())
