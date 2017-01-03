@@ -31,4 +31,4 @@ def get_default_backend():
     """
     return 'asm'
 
-__VERSION__ = resource_string('chiasm_shell', 'VERSION').strip()
+__VERSION__ = resource_string('chiasm_shell', 'VERSION').strip().decode('utf-8')

@@ -9,7 +9,7 @@ from __future__ import absolute_import
 
 import logging
 
-import chiasm_shell.config as c
+import chiasm_shell.config as config
 
 l = logging.getLogger('chiasm_shell.chiasm_shell')
 
@@ -21,8 +21,9 @@ class ChiasmShell(object):
         """
         Creates the default backend and starts the loop.
         """
-        backend = c.get_backends()[c.get_default_backend()]
-        l.info("Chiasm Shell - %s", c.__VERSION__)
+        backend = config.get_backends()[config.get_default_backend()]
+        info_str = "Chiasm Shell - {}".format(config.__VERSION__)
+        l.info(info_str)
         while True:
             l.debug("outer loop spinning up a new shell")
             l.info("Current arch is %s", backend.get_arch())

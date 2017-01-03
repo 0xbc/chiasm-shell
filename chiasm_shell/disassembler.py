@@ -92,7 +92,9 @@ class Disassembler(Backend):
 
         try:
             self._last_decoding = []
-            for (addr, size, mn, op_str) in self._cs.disasm_lite(line.decode('string_escape'), self._firstaddr):
+            stripped_line = re.sub(r'\\x([0-9a-fA-F]+)', r'\1', line)
+            for (addr, size, mn, op_str) in \
+                    self._cs.disasm_lite(binascii.a2b_hex(stripped_line), self._firstaddr):
                 self._last_decoding.append((addr, size, mn, op_str))
                 l.info("0x{:x}:\t{}\t{}".format(addr, mn, op_str))
         except cs.CsError as e:

@@ -49,7 +49,7 @@ disasm> \x40\x31\xdb
 Please get in touch/raise an issue/PR/etc!
 
 ## Known Issues
-- The disassembler is still broken under Python3 due to use of the `decode` method... I'll fix this soon!
+- None at this time.
 
 ## TODO
 - Syntax highlighting and/or tab completion for assembly
