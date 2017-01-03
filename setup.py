@@ -65,7 +65,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Security',
         'Topic :: Software Development :: Assemblers',
-        'Topic :: Software Development :: Dissasemblers',
+        'Topic :: Software Development :: Disassemblers',
     ),
     keywords = ['disassembler', 'assembler'],
 )
