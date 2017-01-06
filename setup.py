@@ -32,13 +32,19 @@ def disable_sandbox():
 
 disable_sandbox()
 
+try:
+    import pypandoc
+    long_desc = pypandoc.convert('README.md', 'rst')
+except(IOError, ImportError):
+    long_desc=open('README.md').read()
+
 setup(
     name='chiasm-shell',
     description='CLI for assembly/disassembly powered by Keystone/Capstone.',
-    long_description=open('README.md').read(),
+    long_description=long_desc,
     version=open('chiasm_shell/VERSION').read().strip(),
     url='https://github.com/0xbc/chiasm-shell',
-    download_url='https://github.com/0xbc/chiasm-shell/tarball/1.0.0a1',
+    download_url='https://github.com/0xbc/chiasm-shell/tarball/{}'.format(version),
     author='Ben Cheney',
     author_email='ben.cheney@gmail.com',
     license='MIT',
