@@ -38,13 +38,15 @@ try:
 except(IOError, ImportError):
     long_desc=open('README.md').read()
 
+ver = open('chiasm_shell/VERSION').read().strip()
+
 setup(
     name='chiasm-shell',
     description='CLI for assembly/disassembly powered by Keystone/Capstone.',
     long_description=long_desc,
-    version=open('chiasm_shell/VERSION').read().strip(),
+    version=ver,
     url='https://github.com/0xbc/chiasm-shell',
-    download_url='https://github.com/0xbc/chiasm-shell/tarball/{}'.format(version),
+    download_url='https://github.com/0xbc/chiasm-shell/tarball/{}'.format(ver),
     author='Ben Cheney',
     author_email='ben.cheney@gmail.com',
     license='MIT',
