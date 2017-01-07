@@ -34,7 +34,8 @@ disable_sandbox()
 
 try:
     import pypandoc
-    long_desc = pypandoc.convert('README.md', 'rst')
+    long_desc = pypandoc.convert('README.md', 'rst', format=u'markdown_github', outputfile='README.rst')
+    print ('successfully converted README.md to rst')
 except(IOError, ImportError):
     long_desc=open('README.md').read()
 
