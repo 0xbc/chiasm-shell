@@ -33,9 +33,9 @@ def disable_sandbox():
 disable_sandbox()
 
 try:
+    # for PyPI, we want a rst readme. For github, we want md. *shruggie*
     import pypandoc
-    long_desc = pypandoc.convert('README.md', 'rst', format=u'markdown_github', outputfile='README.rst')
-    print ('successfully converted README.md to rst')
+    long_desc = pypandoc.convert_file('README.md', 'rst', format=u'markdown_github')
 except(IOError, ImportError):
     long_desc=open('README.md').read()
 
