@@ -6,6 +6,8 @@ I wanted to quickly view some opcodes with [metasm-shell.rb], but I didn't have 
 
 ## How do I install it?
 ```bash
+pip install chiasm-shell
+# OR
 mkvirtualenv chiasm-shell # optional
 git clone https://github.com/0xbc/chiasm-shell
 cd chiasm-shell
