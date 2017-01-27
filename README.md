@@ -1,4 +1,8 @@
 # chiasm-shell
+====
+
+[![Latest Release](https://img.shields.io/pypi/v/chiasm-shell.svg)](https://pypi.python.org/pypi/chiasm-shell)
+
 Python-based interactive assembler/disassembler CLI, powered by [Keystone]/[Capstone].
 
 ## Why did you make this?

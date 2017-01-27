@@ -8,11 +8,21 @@ from __future__ import absolute_import
 
 import logging
 import re
-import keystone as ks
 
 from chiasm_shell.backend import Backend
 
 l = logging.getLogger('chiasm_shell.assembler')
+
+try:
+    import keystone as ks
+except ImportError as e:
+    l.error("*** KEYSTONE IMPORT FAILURE ***")
+    l.error("If you thought you'd already installed keystone-engine,")
+    l.error("please ensure that you've got CMake and any other")
+    l.error("Keystone dependencies installed on your system and")
+    l.error("then try and build it/pip install it again.")
+    l.error("Consult http://www.keystone-engine.org/docs/ for specifics.")
+    raise e
 
 class Assembler(Backend):
     """
